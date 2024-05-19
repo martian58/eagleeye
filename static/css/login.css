@@ -1,0 +1,15 @@
+.container {
+    max-width: 550px;
+    width: 100%;
+}
+.card {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.btn-block {
+    width: 100%;
+}
+.text-center {
+    text-align: center;
+}

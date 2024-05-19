@@ -337,6 +337,10 @@ header {
   display: block;
 }
 
+a{
+    min-width: 100px;
+}
+
 .topnav a.icon {
   background: black;
   display: block;

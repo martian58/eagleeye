@@ -1,32 +1,9 @@
 {% comment %} {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Tree view{% endblock %}
+{% block title %}Tree{% endblock %} {% endcomment %}
+
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Topology Visualization</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/scan.css' %}">
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="stars"></div>
-        <svg></svg>
-    </div>
-</body>
-<script src="{% static 'js/linkedtree.js' %}"></script>
-{% endblock %} {% endcomment %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Topology Visualization</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body, html {
             margin: 0;
@@ -78,8 +55,6 @@
     </style>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-</head>
-<body>
     <div class="container">
         <div class="stars"></div>
         <svg></svg>
@@ -204,8 +179,4 @@
                 .catch(error => console.error("Error occurred while scanning the network.", error));
         });
     </script>
-    
-</body>
-</html>
-
-
+{% endblock %}
