@@ -1,8 +1,3 @@
-{% comment %} {% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Tree{% endblock %} {% endcomment %}
-
 {% block content %}
     <style>
         body, html {
@@ -16,10 +11,15 @@
         .container {
             width: 100%;
             height: 100%;
+            position: relative; /* Ensure container serves as the reference for absolute positioning */
         }
         svg {
             width: 100%;
             height: 100%;
+            position: absolute; /* Position SVG absolutely within the container */
+            top: 0;
+            left: 0;
+            pointer-events: all; /* Enable pointer events for SVG */
         }
         .link {
             stroke: #999;
@@ -60,6 +60,11 @@
         <svg></svg>
     </div>
     <script>
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
         function createStars() {
             const numStars = 100;
             const stars = d3.select(".stars")
@@ -96,7 +101,7 @@
             svg.call(zoom);
     
             const simulation = d3.forceSimulation(nodes)
-                .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+                .force("link", d3.forceLink(links).id(d => d.id).distance(getRandomInt(50, 250)))
                 .force("charge", d3.forceManyBody().strength(-300))
                 .force("center", d3.forceCenter(width / 2, height / 2));
     
