@@ -1,3 +1,7 @@
+{% comment %} {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tree view{% endblock %} {% endcomment %}
 {% block content %}
     <style>
         body, html {
@@ -60,6 +64,7 @@
         <svg></svg>
     </div>
     <script>
+      
         function getRandomInt(min, max) {
             min = Math.ceil(min);
             max = Math.floor(max);

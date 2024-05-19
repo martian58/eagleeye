@@ -10,6 +10,24 @@
     <link rel="icon" href="{% static 'images/icon.ico' %}" type="image/x-icon">
 </head>
 
+<script>
+        
+    function telcoNavbar() {
+        var x = document.getElementById("telcoLinks");
+        if (x.style.display === "block") 
+          x.style.display = "none";
+        else
+          x.style.display = "block";
+    }
+    
+    function localNavbar() {
+        var x = document.getElementById("localLinks");
+        if (x.style.display === "block")
+          x.style.display = "none";
+        else
+          x.style.display = "block";
+    }
+</script>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -64,7 +82,6 @@
     </main>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{% static 'js/base.js' %}"></script>
 </body>
 
 </html>
