@@ -72,7 +72,11 @@ Follow these steps to run the project:
 
     Navigate to `http://127.0.0.1:8000/`
 
-3. **Interact with the visualization:**
+ 3. **Default Credentials**
+    username: admin
+    password: admin
+
+4. **Interact with the visualization:**
 
     - The network topology will be displayed.
     - You can zoom and pan using your mouse.
