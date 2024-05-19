@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Node Detail</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Details{% endblock %}
+{% block content %}
     <h1>{{ node.name }}</h1>
     <p>IP Address: {{ node.ip_address }}</p>
     <p>Location: {{ node.location }}</p>
@@ -29,5 +28,4 @@
             <li>{{ fault.timestamp }}: {{ fault.fault_type }} - {{ fault.description }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

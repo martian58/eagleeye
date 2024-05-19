@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Node List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Telco nodes{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/nodelist.css' %}">
     <h1>Node List</h1>
     <ul>
         {% for node in nodes %}
             <li><a href="{% url 'node_detail' node.pk %}">{{ node.name }}</a></li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

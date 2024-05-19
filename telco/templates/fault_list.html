@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fault List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Faults{% endblock %}
+{% block content %}
     <h1>Fault List</h1>
     <ul>
         {% for fault in faults %}
             <li>{{ fault.timestamp }}: {{ fault.node.name }} - {{ fault.fault_type }} - {{ fault.description }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}
+    

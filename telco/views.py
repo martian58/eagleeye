@@ -1,9 +1,15 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Node, Connection, Alarm, Fault
 
 def node_list(request):
     nodes = Node.objects.all()
     return render(request, 'node_list.html', {'nodes': nodes})
+
+def node_tree(request):
+    nodes = Node.objects.all()
+    return JsonResponse({'nodes': nodes})
+
 
 def node_detail(request, pk):
     node = get_object_or_404(Node, pk=pk)

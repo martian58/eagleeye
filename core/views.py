@@ -47,14 +47,14 @@ def scan_network(network_range):
 
 
 def network_scan_view(request):
-    network_range = '192.168.54.0/24'  # Adjust the network range as needed
+    network_range = '192.168.54.0/24'
     devices = scan_network(network_range)
     return JsonResponse({'devices': devices})
 
 
 # list 
 def network_scan(request):
-    network_range = '192.168.54.0/24'  # Adjust the network range as needed
+    network_range = '192.168.54.0/24'
     devices = scan_network(network_range)
     return render(request,'listscan.html',{'devices': devices})
 

@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #007bff;
+}
+
+h2 {
+    margin-top: 30px;
+    color: #007bff;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.connection-item {
+    display: flex;
+    align-items: center;
+}
+
+.connection-name {
+    margin-right: 10px;
+}
+
+.connection-status {
+    font-weight: bold;
+    color: #28a745; /* green */
+}
+
+.alarm-item {
+    color: #dc3545; /* red */
+}
+
+.fault-item {
+    color: #ffc107; /* yellow */
+}
