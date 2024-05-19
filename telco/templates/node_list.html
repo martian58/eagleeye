@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Node List</title>
+</head>
+<body>
+    <h1>Node List</h1>
+    <ul>
+        {% for node in nodes %}
+            <li><a href="{% url 'node_detail' node.pk %}">{{ node.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

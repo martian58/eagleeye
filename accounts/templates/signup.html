@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center my-4">Signup</h1>
+            <form method="POST" class="card shadow-sm">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.name == 'password1' %}
+                            <small class="form-text text-muted">At least 8 characters.</small>
+                        {% elif field.name == 'password2' %}
+                            <small class="form-text text-muted">Repeat password for verification.</small>
+                        {% else %}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-block">Signup</button>
+                <p class="text-center mt-2">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

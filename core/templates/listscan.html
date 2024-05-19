@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}List view{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Network Scan Results</h1>
+    </a>
+    {% comment %} {% if present_type == PresentTypeEnum.List%} {% endcomment %}
+    <table class="table table-striped mt-3" id="listContent">
+            <tr>
+                <th>Host</th>
+                <th>Hostname</th>
+                <th>State</th>
+                <th>Vendor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+            <tr>
+                <td>{{ device.host }}</td>
+                <td>{{ device.hostname }}</td>
+                <td>{{ device.state }}</td>
+                <td>{{ device.vendor }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% comment %} {% elif presentation_type == PresentTypeEnum.Tree%} {% endcomment %}
+    <div class="container" style="display: none" id="treeContent">
+        <svg></svg>
+    </div>
+    {% comment %} {% endif %} {% endcomment %}
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{% static 'js/linkedtree.js' %}"></script>
+{% endblock %}

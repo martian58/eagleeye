@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alarm List</title>
+</head>
+<body>
+    <h1>Alarm List</h1>
+    <ul>
+        {% for alarm in alarms %}
+            <li>{{ alarm.timestamp }}: {{ alarm.node.name }} - {{ alarm.alarm_type }} - {{ alarm.description }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

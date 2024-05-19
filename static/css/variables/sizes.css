@@ -1,0 +1,9 @@
+:root{
+    --view_min_width: 500px;
+    --view_max_width: 1170px;
+    --navbar_max_height: 340px;
+    --burgermenu_height: 300px;
+    --burgermenu_width: 700px;
+    --default_font_size: 14px;
+    --default_line-height: 1.42857143;
+}

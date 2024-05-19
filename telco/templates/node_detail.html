@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Node Detail</title>
+</head>
+<body>
+    <h1>{{ node.name }}</h1>
+    <p>IP Address: {{ node.ip_address }}</p>
+    <p>Location: {{ node.location }}</p>
+    <p>Status: {{ node.status }}</p>
+
+    <h2>Connections</h2>
+    <ul>
+        {% for connection in connections %}
+            <li>{{ connection.source.name }} -> {{ connection.target.name }} (Status: {{ connection.status }})</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Alarms</h2>
+    <ul>
+        {% for alarm in alarms %}
+            <li>{{ alarm.timestamp }}: {{ alarm.alarm_type }} - {{ alarm.description }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Faults</h2>
+    <ul>
+        {% for fault in faults %}
+            <li>{{ fault.timestamp }}: {{ fault.fault_type }} - {{ fault.description }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

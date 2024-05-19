@@ -1,0 +1,211 @@
+{% comment %} {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tree view{% endblock %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Topology Visualization</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/scan.css' %}">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="stars"></div>
+        <svg></svg>
+    </div>
+</body>
+<script src="{% static 'js/linkedtree.js' %}"></script>
+{% endblock %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Topology Visualization</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #1b2735 0%, #090a0f 100%);
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+        .node {
+            fill: #ffd700; /* Yellow color for nodes */
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+        .node.hover {
+            fill: #ffa500; /* Orange color on hover */
+        }
+        .label {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            fill: #ffffff; /* White color for text */
+        }
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="stars"></div>
+        <svg></svg>
+    </div>
+    <script>
+        function createStars() {
+            const numStars = 100;
+            const stars = d3.select(".stars")
+                .selectAll(".star")
+                .data(d3.range(numStars))
+                .enter()
+                .append("div")
+                .attr("class", "star")
+                .style("left", () => `${Math.random() * 100}%`)
+                .style("top", () => `${Math.random() * 100}%`);
+        }
+    
+        function updateVisualization(devices) {
+            const nodes = devices.map(device => ({ id: device.host }));
+            const links = nodes.slice(1).map(node => ({
+                source: nodes[0].id, // The first node is the server
+                target: node.id
+            }));
+    
+            const svg = d3.select("svg");
+            svg.selectAll("*").remove(); // Clear the svg content before appending new elements
+    
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+    
+            const g = svg.append("g");
+    
+            const zoom = d3.zoom()
+                .scaleExtent([0.5, 4])
+                .on("zoom", (event) => {
+                    g.attr("transform", event.transform);
+                });
+    
+            svg.call(zoom);
+    
+            const simulation = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+    
+            const link = g.append("g")
+                .attr("class", "links")
+                .selectAll("line")
+                .data(links)
+                .enter().append("line")
+                .attr("class", "link");
+    
+            const node = g.append("g")
+                .attr("class", "nodes")
+                .selectAll("circle")
+                .data(nodes)
+                .enter().append("circle")
+                .attr("class", "node")
+                .attr("r", 10)
+                .attr("fill", (d) => (d.id === nodes[0].id ? "#fff" : "#ffd700")) // First node is white, others are yellow
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended))
+                .on("mouseover", function (event, d) {
+                    d3.select(this).classed("hover", true);
+                })
+                .on("mouseout", function (event, d) {
+                    d3.select(this).classed("hover", false);
+                });
+    
+            const label = g.append("g")
+                .attr("class", "labels")
+                .selectAll("text")
+                .data(nodes)
+                .enter().append("text")
+                .attr("class", "label")
+                .attr("dy", -15)
+                .text(d => d.id);
+    
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+    
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+    
+                label
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y);
+            });
+    
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+    
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+    
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            createStars();
+            fetch('/scan_network/')
+                .then(response => response.json())
+                .then(data => {
+                    updateVisualization(data.devices);
+                })
+                .catch(error => console.error("Error occurred while scanning the network.", error));
+        });
+    </script>
+    
+</body>
+</html>
+
+

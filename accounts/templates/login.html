@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+<img src="{% static 'images/' %}" alt="">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center my-4">Login</h1>
+            <form method="POST" class="card p-4 shadow-sm">
+                {% comment %} <img src="{% static 'images/logo.png'%}"> {% endcomment %}
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <p class="text-center mt-3">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
